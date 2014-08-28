@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Height Map</title>
+        <script type="text/javascript" src="js/kernel.js"></script>
+    </head>
+
+    <body>
+        <canvas id="render" height="600" width="600" ></canvas>
+        <input type="file" id="map-loader"/>
+        <canvas id="map" height="600" width="600"></canvas>
+        
+        
+        
+        <script type="text/javascript">
+            (function() {
+                var imgLoader = document.getElementById("map-loader");
+                var r = new K(document.getElementById("render"), document.getElementById("map"), 100, 2);
+                var changeEvent = function(e) {
+                    var fileReader = new FileReader();
+                    fileReader.onload = function(e) {
+                        var image = new Image();
+                        image.onload = function() {
+                            r.loadMap(image);
+                            r.render();
+                        };
+                        image.src = e.target.result;
+                    };
+                    fileReader.readAsDataURL(e.target.files[0]);
+                };
+
+                imgLoader.addEventListener('change', changeEvent);
+            }());
+        </script>
+        
+        
+    </body>
+
+</html>
